@@ -1,0 +1,52 @@
+service: todo-serverless
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:942428920331:table/TodoTable
+
+functions:
+  addTodo:
+    handler: src/addTodo.handler
+    events:
+      - httpApi:
+          path: /addtodo
+          method: post
+  fetchTodos:
+    handler: src/fetchTodos.handler
+    events:
+      - httpApi:
+          path: /fetchtodos
+          method: get
+  fetchTodo:
+    handler: src/fetchTodo.handler
+    events:
+      - httpApi:
+          path: /fetchtodo/{id}
+          method: get  
+  updateTodo:
+    handler: src/updateTodo.handler
+    events:
+      - httpApi:
+          path: /updatetodo/{id}
+          method: put
+
+resources:
+  Resources:
+    TodoTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TodoTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH

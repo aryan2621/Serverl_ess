@@ -1,0 +1,17 @@
+{
+  "name": "step-tutorial",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-step-functions": "^3.7.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1162.0"
+  },
+  "description": ""
+}
